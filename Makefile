@@ -3,7 +3,12 @@ obu:
 	@./bin/obu
 
 reciever:
-	@go build -o bin/data_reciever data_reciever/main.go
-	@./bin/data_reciever
+	@go build -o bin/reciever ./data_reciever
+	@./bin/reciever
+
+
+calculator:
+	@go build -o bin/calculator ./distance_calculator
+	@./bin/calculator
 
 .PHONY: obu

@@ -1,17 +1,17 @@
 package main
 
 import (
+	
 	"fmt"
 	"log"
-	"math"
-	"math/rand"
+	
 	"net/http"
 
-	"github.com/bytemoves/toll-calculator/types" 	
-	"github.com/confluentinc/confluent-kafka-go/v2/kafka"
+	"github.com/bytemoves/toll-calculator/types"
+	// "github.com/confluentinc/confluent-kafka-go/v2/kafka"
 	"github.com/gorilla/websocket"
 )
-
+var kafkaTopic = "obudata" 
 func main() {
 	recv, err := NewDataReceiver()
 	if err != nil {
@@ -28,24 +28,36 @@ type DataReceiver struct {
 }
 
 func NewDataReceiver() (*DataReceiver, error) {
+
 	var (
-		p          DataProducer
-		err        error
+		p DataProducer
+		err error
 		kafkaTopic = "obudata"
 	)
+
 	p, err = NewKafkaProducer(kafkaTopic)
-	if err != nil {
-		return nil, err
+	if err != nil{
+		return nil,err
 	}
+
 	p = NewLogMiddleware(p)
-	return &DataReceiver{
-		msgch: make(chan types.OBUData, 128),
-		prod:  p,
-	}, nil
+
+
+
+
+return &DataReceiver{
+    msgch: make(chan types.OBUData, 128),
+    prod:  p,
+}, nil
 }
+
+
+	
+
 
 func (dr *DataReceiver) produceData(data types.OBUData) error {
 	return dr.prod.ProduceData(data)
+
 }
 
 func (dr *DataReceiver) handleWS(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +83,7 @@ func (dr *DataReceiver) wsReceiveLoop() {
 			log.Println("read error:", err)
 			continue
 		}
-		data.RequestID = rand.Intn(math.MaxInt)
+		
 		fmt.Println("received message", data)
 		if err := dr.produceData(data); err != nil {
 			fmt.Println("kafka produce error:", err)
