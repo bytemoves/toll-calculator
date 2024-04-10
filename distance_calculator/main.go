@@ -16,6 +16,7 @@ func main () {
 		svc CalculatorServicer
 	)
 	svc = NewCalculatorService()
+	svc = NewLogMiddleware(svc)
 	
 	KafkaConsumer , err := NewKafkaConsumer(kafkaTopic,svc)
 	if err !=nil{

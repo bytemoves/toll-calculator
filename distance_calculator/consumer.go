@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	
 
 	// "time"
 
@@ -66,7 +66,9 @@ func (c *KafkaConsumer) readMessageLoop() {
 			logrus.Errorf("Calculation error: %s", err)
 			continue
 		}
-		fmt.Println("distance %.2f\n", distance)
+		_ = distance
 	}
 
 }
+
+

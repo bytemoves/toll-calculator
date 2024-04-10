@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	
+	"math"
 
 	"github.com/bytemoves/toll-calculator/types"
 )
@@ -10,13 +11,28 @@ type CalculatorServicer interface{
 	calculateDistance(types.OBUData) (float64,error)
 }
 type CalculatorService struct {
+	prevPoint[]float64
 
 }
 func NewCalculatorService() CalculatorServicer{
-	return &CalculatorService{}
+	return &CalculatorService{
+		 
+	}
 }
 
 func (s *CalculatorService) calculateDistance(data types.OBUData) (float64,error){
-	fmt.Println("calculating the distance")
-	return 0.0 ,  nil
+	//distance := calculateDistance(data.Lat,data.Long)
+	distance := 0.0
+
+	if len(s.prevPoint) >0{
+		//prevPoint :=  s.points[len(s.points)-1]
+
+		distance = calculateDistance(s.prevPoint[0],s.prevPoint[1],data.Lat,data.Long)
+	}
+	s.prevPoint = []float64{data.Lat,data.Long}
+	return  distance,nil
+}
+
+func calculateDistance(x1,y1,x2,y2 float64) float64{
+	return math.Sqrt(math.Pow(x2-x1,2)+ math.Pow(y2-y1,2))
 }
