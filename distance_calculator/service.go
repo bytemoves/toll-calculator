@@ -1,9 +1,9 @@
 package main
 
 import (
-	
 	"math"
 
+	
 	"github.com/bytemoves/toll-calculator/types"
 )
 
@@ -12,20 +12,22 @@ type CalculatorServicer interface{
 }
 type CalculatorService struct {
 	prevPoint[]float64
+	
 
 }
 func NewCalculatorService() CalculatorServicer{
 	return &CalculatorService{
+		
 		 
 	}
 }
 
 func (s *CalculatorService) calculateDistance(data types.OBUData) (float64,error){
-	//distance := calculateDistance(data.Lat,data.Long)
+
 	distance := 0.0
 
 	if len(s.prevPoint) >0{
-		//prevPoint :=  s.points[len(s.points)-1]
+		
 
 		distance = calculateDistance(s.prevPoint[0],s.prevPoint[1],data.Lat,data.Long)
 	}
