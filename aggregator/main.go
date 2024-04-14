@@ -1,14 +1,20 @@
 package main
 
 import (
+	//"context"
+	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
 	"net"
 	"strconv"
+	"time"
 
 	"net/http"
 
+	//"github.com/bytemoves/toll-calculator/aggregator/client"
+	"github.com/bytemoves/toll-calculator/aggregator/client"
 	"github.com/bytemoves/toll-calculator/types"
 	"google.golang.org/grpc"
 )
@@ -25,6 +31,22 @@ func main () {
 	)
 	svc = NewLogMiddleware(svc )
 	go makeGRPCTransport(*grpcListenAddr,svc)
+	time.Sleep(time.Second * 2)
+	c, err := client.NewGRPCClient(*grpcListenAddr)
+	if err != nil {
+    log.Fatal(err)
+}
+
+	if _, err := c.Aggregate(context.Background(), &types.AggregateRequest{
+    ObuID: 1,
+    Value: 58.55,
+    Unix:  time.Now().UnixNano(),
+	}); err != nil {
+    log.Fatal(err)
+}
+
+
+	
 	makeHTTPTransport(*httpListenAddr,svc)
  
 }
@@ -52,7 +74,7 @@ func makeHTTPTransport (listenAddr string , svc Aggregator) {
 	http.HandleFunc("/aggregate",handleAggregate(svc))
 	http.HandleFunc("/invoice",handleGetInvoice(svc))
 
-	http.ListenAndServe(listenAddr,nil)
+	log.Fatal(http.ListenAndServe(listenAddr,nil))
 
 }
 
