@@ -25,8 +25,13 @@ func main () {
 	)
 	svc = NewCalculatorService()
 	svc = NewLogMiddleware(svc)
+	httpClient :=  client.NewHTTPClient(aggregatorEndpoint)
+	// grpcClient, err :=  client.NewGRPCClient(aggregatorEndpoint)
+	// if err != nil{
+	// 	log.Fatal(err)
+	// }
 	
-	KafkaConsumer , err := NewKafkaConsumer(kafkaTopic,svc,client.NewHTTPClient(aggregatorEndpoint))
+	KafkaConsumer , err := NewKafkaConsumer(kafkaTopic, svc, httpClient) 
 	if err !=nil{
 		log.Fatal(err)
 	}

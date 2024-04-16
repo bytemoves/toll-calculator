@@ -1,6 +1,10 @@
 package main
 
-import "github.com/bytemoves/toll-calculator/types"
+import (
+	"context"
+
+	"github.com/bytemoves/toll-calculator/types"
+)
 
 type GRPCAggregatorServer struct {
 	types.UnimplementedAggregatorServer
@@ -16,12 +20,12 @@ func NEWAggregatoGRPCServer (svc Aggregator) *GRPCAggregatorServer{
  //json  _. 
 //business layer _> busines layer type(main type everyone need to convert to)
 
-func (s *GRPCAggregatorServer) AggregateDistance ( req *types.AggregateRequest) error{
+func (s *GRPCAggregatorServer) Aggregate (ctx context.Context, req *types.AggregateRequest) (*types.None,error){
 	distance  := types.Distance{
 		OBUID: int(req.ObuID),
 		Value: req.Value,
 		Unix: req.Unix,
 	}
-	return s.svc.AggregateDistance(distance)
+	return &types.None{},s.svc.AggregateDistance(distance)
 
 }
