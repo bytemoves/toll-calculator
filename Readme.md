@@ -82,7 +82,7 @@ make build
 4. In the projects case that would be (running from inside the project directory)
 ```
 ../prometheus/prometheus --config.file=.config/prometheus.yml..
-../prometheus-2.51.2.linux-amd64/prometheus --config.file=.config/prometheus.yml
+
 ```
 
 
