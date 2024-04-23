@@ -74,6 +74,8 @@ cd prometheus
 make build
 ```
 
+
+
 3. Run the Prometheus deamon
 ```
 ./promtheus --config.file=<your_config_file>yml
@@ -84,7 +86,3 @@ make build
 ../prometheus/prometheus --config.file=.config/prometheus.yml..
 
 ```
-
-almost done
-
-
