@@ -8,7 +8,7 @@ docker run --name kafka -p 9092:9092 -e ALLOW_PLAINTEXT_LISTENER=yes -e KAFKA_CF
 -e KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
 bitnami/kafka:latest
 `````
-```
+
 ##
 docker-compose down
 docker-compose up -d
