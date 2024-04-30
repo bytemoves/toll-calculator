@@ -86,3 +86,9 @@ make build
 ../prometheus/prometheus --config.file=.config/prometheus.yml..
 
 ```
+
+
+
+what should i  build??
+
+brain storm some ideas...
